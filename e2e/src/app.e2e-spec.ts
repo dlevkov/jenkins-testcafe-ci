@@ -1,23 +1,9 @@
-import { AppPage } from './app.po';
-import { browser, logging } from 'protractor';
+import { Selector } from "testcafe";
 
-describe('workspace-project App', () => {
-  let page: AppPage;
+const header = Selector("div.toolbar span");
 
-  beforeEach(() => {
-    page = new AppPage();
-  });
+fixture("Passing").page("http://localhost:4200");
 
-  it('should display welcome message', () => {
-    page.navigateTo();
-    expect(page.getTitleText()).toEqual('jenkins-testcafe-integration app is running!');
-  });
-
-  afterEach(async () => {
-    // Assert that there are no errors emitted from the browser
-    const logs = await browser.manage().logs().get(logging.Type.BROWSER);
-    expect(logs).not.toContain(jasmine.objectContaining({
-      level: logging.Level.SEVERE,
-    } as logging.Entry));
-  });
+test("Welcome page", async t => {
+  await t.expect(header.textContent).eql("Welcome");
 });
